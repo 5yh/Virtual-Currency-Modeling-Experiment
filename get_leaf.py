@@ -33,9 +33,9 @@ params_1={'booster':'gbtree',
 }
 
 
-model_path = "/pub/p1/zengliang_test/origin_model_best.json"
-modeltxt_path = '/pub/p1/zengliang_test/model_best.txt'
-newmodeltxt_path = '/pub/p1/zengliang_test/newmodel.txt'
+model_path = "/mnt/blockchain0/zengliang_test/origin_model_best.json"
+modeltxt_path = '/mnt/blockchain0/zengliang_test/model_best.txt'
+newmodeltxt_path = '/mnt/blockchain0/zengliang_test/newmodel.txt'
 #获取原模型的leaf值：
 f = open(modeltxt_path,'r',encoding='UTF-8')
 origin_list =[]
@@ -70,13 +70,13 @@ def re_train(model_path,single_data,num_round=200):
     # model.dump_model("model.txt")
     print("retrain中")
     new_model = xgb.train(params_1, single_data, num_round, evals=[(single_data,'train')], xgb_model=model_path)#原有模型基础上继续训练
-    new_model.dump_model("/pub/p1/zengliang_test/newmodel.txt")
+    new_model.dump_model("/mnt/blockchain0/after_sort/black_augmentation/newmodel.txt")
     
 
 result_df = pd.DataFrame()
 
 for m in range(10):
-    path_0 = '/pub/p1/zengliang_test/group_data/grou_'
+    path_0 = '/mnt/blockchain0/zengliang_test/group_data/grou_'
     path_1 = '.csv'
     m =str(m)
     train_filePath = os.path.join(path_0+m+path_1)
@@ -95,9 +95,9 @@ for m in range(10):
     # train_df = train_df.iloc[:,1:]
     # x_train = train_df.iloc[:,0:42]
     # y_train = train_df.iloc[:,-1]
-    for i in range(train_df.shape[0]//100):
-        x_train_re = x_train[i*100:(i+1)*100]
-        y_train_re = y_train[i*100:(i+1)*100]
+    for i in range(train_df.shape[0]//1000):
+        x_train_re = x_train[i*1000:(i+1)*1000]
+        y_train_re = y_train[i*1000:(i+1)*1000]
         # print(x_train_re)
         # print(y_train_re)
         single_data = xgb.DMatrix(x_train_re, label=y_train_re, enable_categorical=True)
@@ -110,4 +110,4 @@ for m in range(10):
         result_dict = {'簇':m,'第几份':i,'leaf差值':result_now}
         result_df = result_df.append(result_dict,ignore_index=True)
 
-result_df.to_csv('/pub/p1/zengliang_test/test_1/leaf_result_origin_best.csv')
+result_df.to_csv('/mnt/blockchain0/zengliang_test/test_1/leaf_result_origin_best.csv')
