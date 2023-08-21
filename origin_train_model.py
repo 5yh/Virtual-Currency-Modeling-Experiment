@@ -17,6 +17,7 @@ train_df_1 = train_df.loc[train_df['label'] == 1]
 train_df_0 = train_df.loc[train_df['label'] == 0]
 train_df_0 = train_df_0.sample(frac = 0.01, random_state=11451)
 print(train_df_0)
+print(train_df_1)
 train_df = train_df_0._append(train_df_1)
 train_df = train_df.drop(columns = 'address')
 print(train_df)
@@ -48,6 +49,7 @@ params_0={'booster':'gbtree',
     'seed':0,
     'nthread':8,
      'silent':1,
+     'scale_pos_weight':300,
     # 'process_type': 'update',
     # 'updater': 'refresh',
     # 'refresh_leaf': True
@@ -56,7 +58,7 @@ watchlist = [(dtrain,'train')]
 
 print('-----------------------开始进行训练：-----------------------')
 start = time.perf_counter()
-model = xgb.train(params_0, dtrain, num_boost_round=200, evals=watchlist)
+model = xgb.train(params_0, dtrain, num_boost_round=100, evals=watchlist)
 end = time.perf_counter()
 print('-----------------------训练结束：-----------------------')
 time_res = end-start
