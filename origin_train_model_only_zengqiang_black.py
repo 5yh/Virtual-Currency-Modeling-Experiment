@@ -23,7 +23,7 @@ train_black=train_black.drop(columns = 'Unnamed: 0')
 train_df_1=train_black
 train_df_0 = train_df_0.sample(frac = 0.01, random_state=11451)
 print(train_df_0)
-train_df = train_df_0._append(train_df_1,ignore_index= True)
+train_df = train_df_0._append(train_df_1)
 # train_df = train_df.sample(frac=1, random_state=114514)
 train_df = train_df.drop(columns = 'address')
 # print(train_df)

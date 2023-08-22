@@ -19,31 +19,45 @@ from sklearn.utils import shuffle
 origin_whitePath='/mnt/blockchain0/zengliang_test/final_train_data/part-00000-41221f5c-bae3-4859-86c5-60e9c9e65f61-c000.csv'
 train_directoryPath = '/mnt/blockchain0/after_sort/white_augmentation/x_train_zengqiang.csv'
 #这个用前3000条增强的9000条，epoch=300
+
+before_trainWhitePath='/mnt/blockchain0/after_sort/x_train_new.csv'
+# 取前3000条用来筛除
+shaichu=pd.read_csv(before_trainWhitePath)
+shaichu=shaichu[0:3000]
+shaichu['label']=0.0
+shaichu=shaichu.drop(columns = 'Unnamed: 0')
 train_df = pd.read_csv(train_directoryPath)
 train_df['label'] = 0.0
 train_df2=pd.read_csv(origin_whitePath)
-# train_df2['label'] = 0.0
 
-# train_df2=train_df2.loc[3001:60000]
+
 train_df2 = train_df2.loc[train_df2['label'] == 0]
 train_df2 = train_df2.drop(columns = 'address')
 train_df2=train_df2.sample(frac=0.01, random_state=11451)
-print(train_df2)
-train_blackPath="/mnt/blockchain0/after_sort/black_zengqiang.csv"
+print(train_df2.shape[0])
+# train_df2=train_df2._append()
+# train_df2=train_df2.drop_duplicates()
+# result_df2 = train_df2[~train_df2.isin(shaichu.to_dict('list')).all(1)]
+# duplicates = train_df2.duplicated(subset=shaichu.columns)
+# # print(duplicates)
+# train_df2 = train_df2[~duplicates]
+
+print(train_df2.shape[0])
+train_blackPath="/mnt/blockchain0/after_sort/black_augmentation/black_zengqiang.csv"
 train_black=pd.read_csv(train_blackPath)
-train_black['label']=1.0
+train_black['label']=1
 
 
 train_black_x = train_black.drop(columns = 'label')
 train_black_y = train_black['label']
-print(type(train_black_y))
+# print(type(train_black_y))
 train_all = pd.DataFrame()
-# train_all = train_all._append(train_df,ignore_index= True)
+train_all = train_all._append(train_df,ignore_index= True)
 train_all = train_all._append(train_df2,ignore_index= True)
 train_all = train_all._append(train_black,ignore_index= True)
 train_all=train_all.drop(columns = 'Unnamed: 0')
 # train_all = train_all.sample(frac=1, random_state=11451)
-print(train_all)
+# print(train_all)
 x_train_new = pd.DataFrame()
 y_train_new = pd.DataFrame()
 x_train_new= train_all.drop(columns = 'label')

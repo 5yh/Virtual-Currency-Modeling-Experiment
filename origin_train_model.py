@@ -49,7 +49,7 @@ params_0={'booster':'gbtree',
     'seed':0,
     'nthread':8,
      'silent':1,
-     'scale_pos_weight':300,
+    #  'scale_pos_weight':300,
     # 'process_type': 'update',
     # 'updater': 'refresh',
     # 'refresh_leaf': True
