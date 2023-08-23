@@ -28,7 +28,7 @@ y_train_new = pd.DataFrame()
 # df_1_add = pd.read_csv('/home/lr/zengliang_test/7003.csv')
 # df_1 = pd.concat([df_1,df_1_add],axis =0)
 
-df = pd.read_csv('/pub/p1/zengliang_test/test_1/leaf_result_origin_quanliang_100.csv')
+df = pd.read_csv('/mnt/blockchain0/zengliang_test/test_1/leaf_result_origin_quanliang_100.csv')
 df = df.sort_values(by=['leaf差值'],axis=0,ascending = False)
 df = df.drop(columns = 'Unnamed: 0')
 df = df.drop(columns = 'leaf差值')

@@ -31,7 +31,7 @@ train_df['label'] = 0.0
 train_df2=pd.read_csv(origin_whitePath)
 
 
-# train_df2 = train_df2.loc[train_df2['label'] == 0]
+train_df2 = train_df2.loc[train_df2['label'] == 0]
 # train_df2 = train_df2.drop(columns = 'address')
 train_df2=train_df2.sample(frac=0.01, random_state=11451)
 print(train_df2.shape[0])
@@ -44,7 +44,6 @@ train_df2 = train_df2[~duplicates]
 
 print(train_df2.shape[0])
 # 在去重后再删除address列
-train_df2 = train_df2.loc[train_df2['label'] == 0]
 train_df2 = train_df2.drop(columns = 'address')
 train_blackPath="/mnt/blockchain0/after_sort/black_augmentation/black_zengqiang.csv"
 train_black=pd.read_csv(train_blackPath)
