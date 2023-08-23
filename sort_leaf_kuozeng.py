@@ -41,7 +41,7 @@ print(leaf_list[1000][1])
 train_df = pd.DataFrame()
 
 #################################################################################
-path_0 = '/pub/p1/zengliang_test/group_data/grou_'
+path_0 = '/mnt/blockchain0/zengliang_test/group_data/grou_'
 path_1 = '.csv'
 
 #根据参数选取一定量的数据，数据量为参数乘100
@@ -59,7 +59,7 @@ for i in range(value):
     train_df_new = train_df_1.loc[train_df_1['label']==0]
 
     x_train_add = train_df_new.drop(columns='label')
-    x_train_add = x_train_add.drop(columns = 'address')
+    # x_train_add = x_train_add.drop(columns = 'address')
     x_train_new = x_train_new._append(x_train_add, ignore_index=True)
     y_train_add = train_df_new['label']
     y_train_new = pd.concat([y_train_new,y_train_add],axis = 0)
@@ -67,7 +67,7 @@ for i in range(value):
 
 y_train_new.columns = ['label']
 y_train_new.index = range(len(y_train_new))
-x_train_new.to_csv('/pub/p1/zengliang_test/after_sort/x_train_new.csv')
-y_train_new.to_csv('/pub/p1/zengliang_test/after_sort/y_train_new.csv')
+x_train_new.to_csv('/mnt/blockchain0/after_sort/x_train_new2.csv')
+y_train_new.to_csv('/mnt/blockchain0/after_sort/y_train_new2.csv')
 
 
