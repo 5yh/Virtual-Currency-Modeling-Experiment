@@ -20,7 +20,7 @@ origin_whitePath='/mnt/blockchain0/zengliang_test/final_train_data/part-00000-41
 train_directoryPath = '/mnt/blockchain0/after_sort/white_augmentation/x_train_zengqiang.csv'
 #这个用前3000条增强的9000条，epoch=300
 
-before_trainWhitePath='/mnt/blockchain0/after_sort/x_train_new.csv'
+before_trainWhitePath='/mnt/blockchain0/after_sort/x_train_new2.csv'
 # 取前3000条用来筛除
 shaichu=pd.read_csv(before_trainWhitePath)
 shaichu=shaichu[0:3000]
@@ -33,13 +33,14 @@ train_df2=pd.read_csv(origin_whitePath)
 
 train_df2 = train_df2.loc[train_df2['label'] == 0]
 # train_df2 = train_df2.drop(columns = 'address')
-train_df2=train_df2.sample(frac=0.01, random_state=11451)
+# train_df2=train_df2.sample(frac=0.01, random_state=11451)
+# print(train_df2)
 print(train_df2.shape[0])
 # train_df2=train_df2._append()
 train_df2=train_df2.drop_duplicates()
 # result_df2 = train_df2[~train_df2.isin(shaichu.to_dict('list')).all(1)]
 duplicates = train_df2.duplicated(subset=shaichu.columns)
-# print(duplicates)
+print(duplicates)
 train_df2 = train_df2[~duplicates]
 
 print(train_df2.shape[0])

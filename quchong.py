@@ -20,6 +20,10 @@ print(df1.shape[0])
 df1=df1.loc[df1['label'] == 0]
 print(df1.shape[0])
 # 经测试，取掉address列后会去掉好多行
-df1=df1.drop(columns='address')
+# df1=df1.drop(columns='address')
 df1=df1.drop_duplicates()
 print(df1.shape[0])
+df1=df1.sample(frac=0.01, random_state=11451)
+df1.to_csv('11451.csv')
+shaichu.drop(columns = 'Unnamed: 0')
+shaichu.to_csv('0-3000.csv')
