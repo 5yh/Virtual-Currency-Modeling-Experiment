@@ -73,25 +73,45 @@ params_0={'booster':'gbtree',
     # 'refresh_leaf': True
 }
 watchlist = [(dtrain,'train')]
+boostArray=np.array([300,400,500,600,1000])
+for i in range(5):
+  print('-----------------------开始进行训练：-----------------------')
+  start = time.perf_counter()
+  model = xgb.train(params_0, dtrain, num_boost_round=boostArray[i], evals=watchlist)
+  end = time.perf_counter()
+  print('-----------------------训练结束：-----------------------')
+  time_res = end-start
+  print('-----------------------增强模型训练所用时间为：',time_res)
+  # model.dump_model("/pub/p1/zengliang_test/model_best.txt")
+  # model.save_model('/pub/p1/zengliang_test/origin_model_best.json')
 
-print('-----------------------开始进行训练：-----------------------')
-start = time.perf_counter()
-model = xgb.train(params_0, dtrain, num_boost_round=200, evals=watchlist)
-end = time.perf_counter()
-print('-----------------------训练结束：-----------------------')
-time_res = end-start
-print('-----------------------增强模型训练所用时间为：',time_res)
-# model.dump_model("/pub/p1/zengliang_test/model_best.txt")
-# model.save_model('/pub/p1/zengliang_test/origin_model_best.json')
 
+    # model = xgb.Booster()
+  # model.load_model('/home/lr/zengliang_test/origin_model_quanliang.json')
+  #用测试集进行测试
+  ypred_new = model.predict(dtest)
+  ypred_new = np.around(ypred_new)
+  # print(ypred_new)
+  # ypred_new = (ypred_new >= 0.75)*1
+  blackCnt=np.sum(ypred_new ==1)
+  accuracy=metrics.accuracy_score(y_test,ypred_new)
+  recall=metrics.recall_score(y_test,ypred_new,  labels=[1], average='micro')
+  precision=metrics.precision_score(y_test,ypred_new,  labels=[1], average='micro')
+  f1Score=metrics.f1_score(y_test,ypred_new, labels=[1], average='micro')
+  print('预测结果中黑样本个数是：',blackCnt)
+  print('新模型的accuracy is ：',accuracy)
+  print('新模型的recall is ：',recall)
+  print('新模型的precision is ：',precision)
+  print('新模型的f1_score is ：',f1Score)
+  file_path = "logistic.txt"
 
-# model = xgb.Booster()
-# model.load_model('/home/lr/zengliang_test/origin_model_quanliang.json')
-#用测试集进行测试
-ypred_new = model.predict(dtest)
-ypred_new = np.around(ypred_new)
-# ypred_new = (ypred_new >= 0.75)*1
-print('预测结果中黑样本个数是：',np.sum(ypred_new ==1))
-print('新模型的accuracy is ：',metrics.accuracy_score(y_test,ypred_new))
-print('新模型的recall is ：',metrics.recall_score(y_test,ypred_new))
-print('新模型的precision is ：',metrics.precision_score(y_test,ypred_new))
+  # 打开文件并写入F1-Score值
+  with open(file_path, "a") as file:
+    file.write(f"num_boost_round: {boostArray[i]}\n")
+    file.write(f"blackCnt: {blackCnt}\n")
+    file.write(f"accuracy: {accuracy}\n")
+    file.write(f"recall: {recall}\n")
+    file.write(f"precision: {precision}\n")
+    file.write(f"f1_score: {f1Score}\n")
+  # boostArray[i]=metrics.precision_score(y_test,ypred_new,  labels=[1], average='micro')
+  # print('新模型的precision is ：',metrics.precision_score(y_test,ypred_new))

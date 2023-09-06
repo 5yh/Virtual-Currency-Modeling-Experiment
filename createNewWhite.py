@@ -47,9 +47,9 @@ print(finalTrainData.shape[0])
 whiteAugPath = '/mnt/blockchain0/after_sort/white_augmentation/x_train_zengqiang.csv'
 whiteAugData=pd.read_csv(whiteAugPath)
 whiteAugData=whiteAugData.drop(columns = 'Unnamed: 0')
-whiteAugData['label']=0
+whiteAugData['label']=2
 
 print(whiteAugData)
 finalTrainData=finalTrainData.drop(columns = 'address')
 finalTrainData=finalTrainData._append(whiteAugData,ignore_index= True)
-finalTrainData.to_csv('/mnt/blockchain0/after_sort/finalAugementTrain2.csv',index=False)
+finalTrainData.to_csv('/mnt/blockchain0/after_sort/finalAugementTrain3.csv',index=False)

@@ -63,7 +63,7 @@ watchlist = [(dtrain,'train')]
 
 print('-----------------------开始进行训练：-----------------------')
 start = time.perf_counter()
-model = xgb.train(params_0, dtrain, num_boost_round=200, evals=watchlist)
+model = xgb.train(params_0, dtrain, num_boost_round=300, evals=watchlist)
 end = time.perf_counter()
 print('-----------------------训练结束：-----------------------')
 time_res = end-start
