@@ -11,7 +11,7 @@ from sklearn import metrics
 from sklearn.utils import shuffle
 # 对黑样本和白样本都进行增强后对模型进行训练
 
-finalWhitePath='/mnt/blockchain0/after_sort/finalAugementTrain2.csv'
+finalWhitePath='/mnt/blockchain0/after_sort/finalAugementTrain3.csv'
 train_white=pd.read_csv(finalWhitePath)
 
 
@@ -54,19 +54,19 @@ y_test = test_df['label']
 dtest = xgb.DMatrix(x_test,label=y_test,enable_categorical=False)
 
 params_0={'booster':'gbtree',
-    # 'objective': 'multi:softmax',
-    # 'num_class':'2',
-    'objective':'binary:logistic',
+    'objective': 'multi:softmax',
+    'num_class':'3',
+    # 'objective':'binary:logistic',
     'eval_metric': 'auc',
     'max_depth':3,
-    'lambda':10,
+    'lambda':20,
     'subsample':1,
     'colsample_bytree':0.8,
     'colsample_bylevel':0.6,
     'min_child_weight':2,
     'eta': 0.1,
     'seed':0,
-    'nthread':8,
+    'nthread':16,
      'silent':1,
     # 'process_type': 'update',
     # 'updater': 'refresh',
@@ -103,6 +103,7 @@ for i in range(5):
   print('新模型的recall is ：',recall)
   print('新模型的precision is ：',precision)
   print('新模型的f1_score is ：',f1Score)
+  print(' ')
   file_path = "logistic.txt"
 
   # 打开文件并写入F1-Score值
