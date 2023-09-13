@@ -59,7 +59,8 @@ params_0={'booster':'gbtree',
     # 'objective':'binary:logistic',
     'eval_metric': 'auc',
     'max_depth':3,
-    'lambda':20,
+    'lambda':5,
+    'alpha':0,
     'subsample':1,
     'colsample_bytree':0.8,
     'colsample_bylevel':0.6,
@@ -71,6 +72,7 @@ params_0={'booster':'gbtree',
     # 'process_type': 'update',
     # 'updater': 'refresh',
     # 'refresh_leaf': True
+    
 }
 watchlist = [(dtrain,'train')]
 boostArray=np.array([300,400,500,600,1000])
@@ -103,7 +105,7 @@ for i in range(5):
   print('新模型的recall is ：',recall)
   print('新模型的precision is ：',precision)
   print('新模型的f1_score is ：',f1Score)
-  print(' ')
+  # print(' ')
   file_path = "logistic.txt"
 
   # 打开文件并写入F1-Score值
@@ -114,5 +116,6 @@ for i in range(5):
     file.write(f"recall: {recall}\n")
     file.write(f"precision: {precision}\n")
     file.write(f"f1_score: {f1Score}\n")
+    file.write("\n")
   # boostArray[i]=metrics.precision_score(y_test,ypred_new,  labels=[1], average='micro')
   # print('新模型的precision is ：',metrics.precision_score(y_test,ypred_new))
