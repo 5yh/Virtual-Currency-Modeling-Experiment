@@ -65,7 +65,7 @@ params_0={'booster':'gbtree',
     'colsample_bytree':0.8,
     'colsample_bylevel':0.6,
     'min_child_weight':2,
-    'eta': 0.1,
+    'eta': 0.05,
     'seed':0,
     'nthread':16,
      'silent':1,
@@ -75,7 +75,9 @@ params_0={'booster':'gbtree',
     
 }
 watchlist = [(dtrain,'train')]
-boostArray=np.array([300,400,500,600,1000])
+# boostArray=np.array([300,400,500,600,1000])
+# boostArray=np.array([350,360,370,380,390])
+boostArray=np.array([1100,1200,1500,1600,2000])
 for i in range(5):
   print('-----------------------开始进行训练：-----------------------')
   start = time.perf_counter()
